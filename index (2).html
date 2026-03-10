@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioGas India — Turn Waste Into Energy</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f0a;
+    --surface: #111811;
+    --card: #161e16;
+    --border: #1f2e1f;
+    --green: #4ade80;
+    --green-dim: #22c55e;
+    --green-dark: #166534;
+    --amber: #fbbf24;
+    --amber-dim: #d97706;
+    --text: #e8f5e8;
+    --muted: #6b8c6b;
+    --accent: #a3e635;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(10,15,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.3rem;
+    color: var(--green);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green); color: #000;
+    padding: 0.5rem 1.2rem; border-radius: 999px;
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(74,222,128,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(251,191,36,0.04) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.08;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2);
+    color: var(--green); padding: 0.35rem 0.9rem; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem;
+    animation: fadeSlideUp 0.6s ease both;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.03em;
+    animation: fadeSlideUp 0.6s 0.1s ease both;
+  }
+  h1 .highlight { color: var(--green); }
+  h1 .highlight-amber { color: var(--amber); }
+
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted);
+    max-width: 520px; line-height: 1.7;
+    animation: fadeSlideUp 0.6s 0.2s ease both;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    animation: fadeSlideUp 0.6s 0.3s ease both;
+  }
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+    color: var(--green); display: block;
+  }
+  .hero-stat-label { font-size: 0.8rem; color: var(--muted); display: block; }
+  .hero-cta-row {
+    display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    animation: fadeSlideUp 0.6s 0.4s ease both;
+  }
+  .btn-primary {
+    background: var(--green); color: #000;
+    padding: 0.85rem 1.8rem; border-radius: 999px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-secondary {
+    border: 1px solid var(--border); color: var(--text);
+    padding: 0.85rem 1.8rem; border-radius: 999px;
+    font-weight: 500; font-size: 0.95rem; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+  /* FLOATING CARDS */
+  .hero-float {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    z-index: 1; display: flex; flex-direction: column; gap: 1rem;
+    animation: fadeSlideLeft 0.8s 0.5s ease both;
+  }
+  @media (max-width: 900px) { .hero-float { display: none; } }
+  .float-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1rem 1.4rem;
+    min-width: 200px;
+  }
+  .float-card-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .float-card-value { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--green); }
+  .float-card-unit { font-size: 0.8rem; color: var(--muted); }
+  .float-card.amber .float-card-value { color: var(--amber); }
+
+  @keyframes fadeSlideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+  @keyframes fadeSlideLeft { from { opacity:0; transform:translate(30px,-50%); } to { opacity:1; transform:translate(0,-50%); } }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 2.5rem; }
+  .section-label {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--green); font-weight: 600; margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--green); opacity: 0.4; }
+  h2 {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+    max-width: 600px;
+  }
+  h2 span { color: var(--green); }
+
+  /* CALCULATOR */
+  #calculator {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .calc-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; max-width: 1100px; margin: 0 auto;
+  }
+  @media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-intro { margin-bottom: 2rem; }
+  .calc-intro p { color: var(--muted); margin-top: 0.75rem; }
+
+  /* Feedstock Selector */
+  .feedstock-selector {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+    max-height: 160px; overflow-y: auto; padding-right: 4px;
+  }
+  .feedstock-selector::-webkit-scrollbar { width: 4px; }
+  .feedstock-selector::-webkit-scrollbar-track { background: var(--border); border-radius: 99px; }
+  .feedstock-selector::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 99px; }
+  .feed-btn {
+    padding: 0.4rem 0.85rem; border-radius: 999px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-size: 0.8rem; cursor: pointer;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    display: flex; align-items: center; gap: 0.35rem;
+    white-space: nowrap;
+  }
+  .feed-btn:hover { border-color: var(--green); color: var(--green); }
+  .feed-btn.active { background: rgba(74,222,128,0.12); border-color: var(--green); color: var(--green); }
+
+  /* Sliders */
+  .slider-group { margin-bottom: 2rem; }
+  .slider-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; }
+  .slider-label { font-size: 0.9rem; font-weight: 500; }
+  .slider-value {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--green);
+  }
+  .slider-unit { font-size: 0.75rem; color: var(--muted); margin-left: 0.2rem; }
+
+  input[type=range] {
+    -webkit-appearance: none; width: 100%; height: 4px;
+    background: var(--border); border-radius: 99px; cursor: pointer;
+    position: relative;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 20px; height: 20px;
+    background: var(--green); border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(74,222,128,0.15);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(74,222,128,0.2);
+  }
+  .slider-track-fill {
+    pointer-events: none;
+  }
+
+  /* Output Panel */
+  .output-panel {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2rem; display: flex; flex-direction: column;
+    gap: 1.2rem; position: sticky; top: 90px;
+  }
+  .output-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .output-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .output-live {
+    font-size: 0.7rem; color: var(--green); background: rgba(74,222,128,0.1);
+    padding: 0.2rem 0.6rem; border-radius: 999px; animation: pulse 2s infinite;
+  }
+
+  .metric-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: border-color 0.3s;
+  }
+  .metric-card:hover { border-color: rgba(74,222,128,0.3); }
+  .metric-info {}
+  .metric-name { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .metric-num {
+    font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
+    color: var(--green); transition: all 0.3s;
+  }
+  .metric-card.amber .metric-num { color: var(--amber); }
+  .metric-card.blue .metric-num { color: #60a5fa; }
+  .metric-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+  .metric-icon { font-size: 2rem; opacity: 0.7; }
+
+  /* Gauge */
+  .gauge-wrap { text-align: center; margin: 0.5rem 0; }
+  .gauge-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .gauge-bar {
+    height: 10px; background: var(--border); border-radius: 99px; overflow: hidden;
+  }
+  .gauge-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--green-dark), var(--green), var(--accent));
+    transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .gauge-scale { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; }
+
+  .impact-sentence {
+    background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.15);
+    border-radius: 12px; padding: 1rem; font-size: 0.85rem; color: var(--text);
+    line-height: 1.6; transition: all 0.3s;
+  }
+  .impact-sentence strong { color: var(--green); }
+
+  .projection-toggle {
+    display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .proj-btn {
+    flex: 1; padding: 0.5rem; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-size: 0.8rem; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  }
+  .proj-btn.active { background: rgba(74,222,128,0.1); border-color: var(--green); color: var(--green); }
+
+  /* HOW IT WORKS */
+  #how {
+    max-width: 1100px; margin: 0 auto; padding: 5rem 2.5rem;
+  }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .step-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .step-card:hover { border-color: rgba(74,222,128,0.3); transform: translateY(-3px); }
+  .step-num {
+    font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+    color: rgba(74,222,128,0.08); position: absolute; top: -0.3rem; right: 0.8rem;
+    line-height: 1;
+  }
+  .step-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .step-title { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* MAP */
+  #map-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+  .map-inner { max-width: 1100px; margin: 0 auto; }
+  .map-layout {
+    display: grid; grid-template-columns: 1fr 320px;
+    gap: 2rem; margin-top: 2.5rem;
+  }
+  @media (max-width: 768px) { .map-layout { grid-template-columns: 1fr; } }
+
+  .map-container {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden; height: 420px;
+    position: relative;
+  }
+  #map { width: 100%; height: 100%; }
+
+  .map-sidebar {}
+  .geo-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.2rem; margin-bottom: 1rem;
+  }
+  .geo-card-title { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.8rem; }
+  .geo-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+  }
+  .geo-item:last-child { border-bottom: none; }
+  .geo-name { font-size: 0.85rem; font-weight: 500; }
+  .geo-dist { font-size: 0.75rem; color: var(--green); }
+  .geo-type { font-size: 0.7rem; color: var(--muted); }
+
+  .locate-btn {
+    width: 100%; padding: 0.9rem;
+    background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3);
+    color: var(--green); border-radius: 12px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    transition: all 0.2s; margin-bottom: 1rem;
+  }
+  .locate-btn:hover { background: rgba(74,222,128,0.2); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.82rem; color: var(--muted);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--green); }
+
+  /* scroll animation */
+  .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Map popup style */
+  .map-popup {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.82rem !important;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Impact <span>Calculator</span></div>
+  <ul class="nav-links">
+    <li><a href="#calculator">Calculator</a></li>
+    <li><a href="#map-section">Find Plants</a></li>
+  </ul>
+  <a href="#calculator" class="nav-cta">Try Calculator →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🌱 India's Biogas Impact Tool</div>
+    <h1>Select Your<br><span class="highlight">Feedstock.</span><br>See the <span class="highlight-amber">Energy Inside</span></h1>
+    <p class="hero-sub">
+      Discover how much biogas, electricity, and savings your household or farm can generate. Drag a slider. See your impact. Find your nearest plant.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">72M+</span>
+        <span class="hero-stat-label">tonnes waste/year</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">29GW</span>
+        <span class="hero-stat-label">biogas potential</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">₹45B</span>
+        <span class="hero-stat-label">annual savings possible</span>
+      </div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#calculator" class="btn-primary">🔢 Calculate My Impact</a>
+      <a href="#map-section" class="btn-secondary">📍 Find Nearby Plants</a>
+    </div>
+  </div>
+  <div class="hero-float">
+    <div class="float-card">
+      <div class="float-card-label">10kg Maize Silage</div>
+      <div class="float-card-value">2.2 <span class="float-card-unit">m³ gas</span></div>
+    </div>
+    <div class="float-card amber">
+      <div class="float-card-label">Equivalent to</div>
+      <div class="float-card-value">4.4 hrs <span class="float-card-unit">cooking fuel</span></div>
+    </div>
+    <div class="float-card">
+      <div class="float-card-label">CO₂ Offset</div>
+      <div class="float-card-value">3.6 <span class="float-card-unit">kg/day</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calculator">
+  <div class="calc-grid">
+    <!-- LEFT: Inputs -->
+    <div>
+      <div class="calc-intro reveal">
+        <div class="section-label">Interactive Calculator</div>
+        <h2>What's Your<br><span>Waste Worth?</span></h2>
+        <p>Select your feedstock type and input quantities. See real-time impact estimates based on MNRE guidelines.</p>
+      </div>
+
+      <!-- Feedstock selector -->
+      <div class="feedstock-selector reveal">
+        <button class="feed-btn active" data-type="maize" onclick="setFeedstock(this,'maize')">🌽 Maize Silage</button>
+        <button class="feed-btn" data-type="distillery" onclick="setFeedstock(this,'distillery')">🏭 Distillery Spent Wash</button>
+        <button class="feed-btn" data-type="brewery" onclick="setFeedstock(this,'brewery')">🍺 Brewery Spent Grain</button>
+        <button class="feed-btn" data-type="rumen" onclick="setFeedstock(this,'rumen')">🩸 Rumen + Blood Waste</button>
+        <button class="feed-btn" data-type="groundnut" onclick="setFeedstock(this,'groundnut')">🥜 Groundnut Oil Cake</button>
+        <button class="feed-btn" data-type="algae" onclick="setFeedstock(this,'algae')">🌊 Algae Biomass</button>
+        <button class="feed-btn" data-type="pressmud" onclick="setFeedstock(this,'pressmud')">🍬 Press Mud (Sugarcane)</button>
+        <button class="feed-btn" data-type="banana" onclick="setFeedstock(this,'banana')">🍌 Banana Stem Waste</button>
+        <button class="feed-btn" data-type="napier" onclick="setFeedstock(this,'napier')">🌿 Napier Grass</button>
+        <button class="feed-btn" data-type="foodwaste" onclick="setFeedstock(this,'foodwaste')">🍱 Segregated Food Waste</button>
+        <button class="feed-btn" data-type="bakery" onclick="setFeedstock(this,'bakery')">🥐 Bakery Waste</button>
+        <button class="feed-btn" data-type="vegetable" onclick="setFeedstock(this,'vegetable')">🥬 Vegetable Market Waste</button>
+        <button class="feed-btn" data-type="cowdung" onclick="setFeedstock(this,'cowdung')">🐄 Cow Dung</button>
+        <button class="feed-btn" data-type="poultry" onclick="setFeedstock(this,'poultry')">🐔 Poultry Litter</button>
+      </div>
+
+      <!-- Projection toggle -->
+      <div class="projection-toggle reveal">
+        <button class="proj-btn active" onclick="setProjection(this,'daily')">Daily</button>
+        <button class="proj-btn" onclick="setProjection(this,'monthly')">Monthly</button>
+        <button class="proj-btn" onclick="setProjection(this,'yearly')">Yearly</button>
+      </div>
+
+      <!-- Sliders -->
+      <div class="slider-group reveal">
+        <div class="slider-row">
+          <span class="slider-label" id="slider1-label">Waste Quantity</span>
+          <span><span class="slider-value" id="val1">10</span><span class="slider-unit" id="unit1"> kg/day</span></span>
+        </div>
+        <input type="range" id="slider1" min="1" max="500" value="10" oninput="updateCalc()">
+      </div>
+
+      <div class="slider-group reveal" id="slider2-group">
+        <div class="slider-row">
+          <span class="slider-label" id="slider2-label">Moisture Content</span>
+          <span><span class="slider-value" id="val2">70</span><span class="slider-unit"> %</span></span>
+        </div>
+        <input type="range" id="slider2" min="40" max="95" value="70" oninput="updateCalc()">
+      </div>
+
+      <div class="slider-group reveal">
+        <div class="slider-row">
+          <span class="slider-label">Digester Efficiency</span>
+          <span><span class="slider-value" id="val3">80</span><span class="slider-unit"> %</span></span>
+        </div>
+        <input type="range" id="slider3" min="50" max="95" value="80" oninput="updateCalc()">
+      </div>
+
+      <!-- Feedstock description -->
+      <div class="impact-sentence reveal" id="feedstock-desc">
+        Kitchen waste is high in volatile solids. Every 10 kg generates approximately 1.5 m³ of biogas — enough for 3 hours of cooking. Urban households typically generate 0.5–1 kg per person per day.
+      </div>
+    </div>
+
+    <!-- RIGHT: Output Panel -->
+    <div>
+      <div class="output-panel reveal">
+        <div class="output-header">
+          <h3>Your Impact</h3>
+          <span class="output-live">● LIVE</span>
+        </div>
+
+        <div class="metric-card" id="gas-card">
+          <div class="metric-info">
+            <div class="metric-name">Biogas Yield</div>
+            <div class="metric-num" id="out-gas">1.5</div>
+            <div class="metric-sub" id="out-gas-sub">m³ per day</div>
+          </div>
+          <div class="metric-icon">🔥</div>
+        </div>
+
+        <div class="metric-card amber" id="elec-card">
+          <div class="metric-info">
+            <div class="metric-name">Electricity Equivalent</div>
+            <div class="metric-num" id="out-elec">3.0</div>
+            <div class="metric-sub" id="out-elec-sub">kWh per day</div>
+          </div>
+          <div class="metric-icon">⚡</div>
+        </div>
+
+        <div class="metric-card" id="co2-card">
+          <div class="metric-info">
+            <div class="metric-name">CO₂ Offset</div>
+            <div class="metric-num" id="out-co2">2.4</div>
+            <div class="metric-sub" id="out-co2-sub">kg CO₂e per day</div>
+          </div>
+          <div class="metric-icon">🌿</div>
+        </div>
+
+        <div class="metric-card blue" id="savings-card">
+          <div class="metric-info">
+            <div class="metric-name">Cost Savings</div>
+            <div class="metric-num" id="out-savings">₹45</div>
+            <div class="metric-sub" id="out-savings-sub">per day</div>
+          </div>
+          <div class="metric-icon">💰</div>
+        </div>
+
+        <!-- Gauge -->
+        <div class="gauge-wrap">
+          <div class="gauge-label">Utilization Potential</div>
+          <div class="gauge-bar"><div class="gauge-fill" id="gauge" style="width:65%"></div></div>
+          <div class="gauge-scale"><span>Low</span><span>Medium</span><span>High</span></div>
+        </div>
+
+        <!-- Impact sentence -->
+        <div class="impact-sentence" id="impact-sentence">
+          Your <strong id="imp-qty">10 kg</strong> of selected waste daily generates <strong id="imp-gas">1.5 m³</strong> of biogas — covering <strong id="imp-cook">3 hrs</strong> of cooking and saving <strong id="imp-save">₹45</strong> per day. That's <strong id="imp-annual">₹16,425</strong> annually.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="map-inner">
+    <div class="section-label reveal">Nearby Plants</div>
+    <h2 class="reveal">Find Biogas<br><span>Plants Near You</span></h2>
+    <div class="map-layout">
+      <div class="map-container reveal">
+        <div id="map"></div>
+      </div>
+      <div class="map-sidebar reveal">
+        <button class="locate-btn" onclick="locateUser()">📍 Use My Location</button>
+        <div class="geo-card">
+          <div class="geo-card-title">SAMPLE PLANTS — INDIA</div>
+          <div class="geo-item">
+            <div>
+              <div class="geo-name">Pune Municipal Biogas</div>
+              <div class="geo-type">Municipal • 500 TPD</div>
+            </div>
+            <div class="geo-dist">Pune, MH</div>
+          </div>
+          <div class="geo-item">
+            <div>
+              <div class="geo-name">IARI Biogas Plant</div>
+              <div class="geo-type">Agricultural • 50 TPD</div>
+            </div>
+            <div class="geo-dist">Delhi</div>
+          </div>
+          <div class="geo-item">
+            <div>
+              <div class="geo-name">Namakkal Cattle Biogas</div>
+              <div class="geo-type">Cattle Dung • 200 TPD</div>
+            </div>
+            <div class="geo-dist">Namakkal, TN</div>
+          </div>
+          <div class="geo-item">
+            <div>
+              <div class="geo-name">Karnal Gobar Gas</div>
+              <div class="geo-type">Rural • 80 TPD</div>
+            </div>
+            <div class="geo-dist">Karnal, HR</div>
+          </div>
+          <div class="geo-item">
+            <div>
+              <div class="geo-name">Nashik Agri Biogas</div>
+              <div class="geo-type">Crop Residue • 150 TPD</div>
+            </div>
+            <div class="geo-dist">Nashik, MH</div>
+          </div>
+        </div>
+        <div class="geo-card">
+          <div class="geo-card-title">DATA SOURCE</div>
+          <div style="font-size:0.78rem;color:var(--muted);line-height:1.6">
+            Plant data sourced from MNRE's New National Biogas Programme and State Nodal Agency registrations. Updated quarterly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Impact Calculator</div>
+  <div>Data based on MNRE guidelines & IARI research. For educational use.</div>
+  <div>Built as an open-source prototype • <a href="https://github.com/sivaneshbill-gif" style="color:var(--green);text-decoration:none">GitHub</a></div>
+</footer>
+
+<!-- Leaflet Map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────
+const FEEDSTOCK = {
+  maize:      { label:'Maize Silage',              gasPerKg:0.22, unit:'kg/day', max:1000, moisture:65, desc:'Maize silage is an energy-dense feedstock with high volatile solid content. It yields ~220 L of biogas per kg and is commonly co-digested with slurry in farm-scale plants. One tonne can generate up to 220 m³ of gas.' },
+  distillery: { label:'Distillery Spent Wash',     gasPerKg:0.30, unit:'litres/day', max:50000, moisture:93, desc:'Distillery spent wash has very high organic load (COD 80,000–120,000 mg/L). It is one of the most potent biogas substrates — 1 litre yields ~0.3 L of methane. Large distilleries run captive biogas plants to meet CPCB norms.' },
+  brewery:    { label:'Brewery Spent Grain',       gasPerKg:0.18, unit:'kg/day', max:2000, moisture:80, desc:'Brewery spent grain (BSG) is rich in cellulose, hemicellulose and proteins. Each kg generates ~180 L of biogas. Indian breweries produce 15–20 kg BSG per hectolitre of beer — a massive untapped resource.' },
+  rumen:      { label:'Rumen Content + Blood',     gasPerKg:0.14, unit:'kg/day', max:500, moisture:85, desc:'Rumen content and blood waste from slaughterhouses are high-nitrogen substrates. Blood waste yields ~600 L/kg VS but requires co-digestion to prevent ammonia inhibition. Usually mixed 1:3 with dung.' },
+  groundnut:  { label:'Groundnut Oil Cake',        gasPerKg:0.35, unit:'kg/day', max:500, moisture:10, desc:'Groundnut oil cake (deoiled) is exceptionally energy-rich — yielding up to 350 L/kg of biogas. Its high protein content means it must be diluted to avoid ammonia toxicity. Best co-digested at 10–15% mix.' },
+  algae:      { label:'Algae Biomass',             gasPerKg:0.25, unit:'kg/day', max:300, moisture:85, desc:'Microalgae like Chlorella and Spirulina yield 200–340 mL/g VS. Algae from sewage treatment plant ponds are a zero-cost feedstock. Pre-treatment (thermal or ultrasonic) boosts gas yield by 30–50%.' },
+  pressmud:   { label:'Press Mud of Sugarcane',    gasPerKg:0.17, unit:'kg/day', max:2000, moisture:75, desc:'Sugarcane press mud is generated at 3–4% of cane crushed. It contains 25–30% organic carbon and yields ~170 L/kg. Maharashtra and UP sugar mills are increasingly co-generating power from press mud.' },
+  banana:     { label:'Banana Stem Waste',         gasPerKg:0.12, unit:'kg/day', max:1000, moisture:92, desc:'Banana pseudostem and bunch waste from processing units are high in water but moderate in biogas yield (~120 L/kg). Kerala and Tamil Nadu generate 2–3 million tonnes annually — mostly landfilled.' },
+  napier:     { label:'Napier Grass',              gasPerKg:0.19, unit:'kg/day', max:2000, moisture:78, desc:'Napier (elephant) grass is a dedicated energy crop yielding 60–80 tonnes/hectare/year. It produces ~190 L of biogas per kg fresh weight and thrives on marginal land with minimal inputs — ideal for rural biogas.' },
+  foodwaste:  { label:'Source-Segregated Food Waste', gasPerKg:0.15, unit:'kg/day', max:500, moisture:70, desc:'Source-segregated food waste from hotels, canteens and hostels is one of the cleanest biogas feedstocks. Yields ~150 L/kg with minimal contaminants. Swachh Bharat mandate is driving SWM-linked biogas in tier-2 cities.' },
+  bakery:     { label:'Bakery Waste',              gasPerKg:0.40, unit:'kg/day', max:500, moisture:35, desc:'Bakery rejects — stale bread, biscuit crumbs, cake scraps — are carbohydrate-rich and yield an exceptional ~400 L/kg of biogas. Their low moisture content means they need to be slurried before feeding the digester.' },
+  vegetable:  { label:'Vegetable Market Waste',   gasPerKg:0.10, unit:'kg/day', max:3000, moisture:90, desc:'Vegetable market waste is India\'s most available urban feedstock — 30–40% of market arrivals are wasted. Yields ~100 L/kg. Cities like Pune and Nashik run 5–10 TPD vegetable market biogas plants to offset grid power.' },
+  cowdung:    { label:'Cow Dung',                  gasPerKg:0.04, unit:'kg/day', max:2000, moisture:80, desc:'Cow dung is the most widely used biogas feedstock in rural India. 35–40 kg of fresh dung from one animal generates ~1.4 m³ of gas per day. The NBMMP has installed over 5 million family-size plants using this substrate.' },
+  poultry:    { label:'Poultry Litter',            gasPerKg:0.08, unit:'kg/day', max:1000, moisture:30, desc:'Poultry litter (droppings + bedding) is nitrogen-rich and yields ~80 L/kg. High ammonia levels require careful C:N ratio management — typically diluted 1:2 with water or co-digested with crop waste for stable output.' },
+};
+
+const ELEC_PER_M3 = 2.0;    // kWh per m³ biogas
+const CO2_PER_KWH = 0.82;   // kg CO2 per kWh avoided (India grid)
+const PRICE_PER_KWH = 5.5;  // ₹ per kWh
+
+let currentFeedstock = 'maize';
+let projection = 'daily';
+const projMultiplier = { daily:1, monthly:30, yearly:365 };
+const projLabel = { daily:'day', monthly:'month', yearly:'year' };
+
+// ─── FEEDSTOCK SWITCH ────────────────────────────────────────
+function setFeedstock(btn, type) {
+  document.querySelectorAll('.feed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFeedstock = type;
+  const f = FEEDSTOCK[type];
+  document.getElementById('slider1').max = f.max;
+  document.getElementById('slider1').value = Math.min(parseInt(document.getElementById('slider1').value), f.max);
+  document.getElementById('unit1').textContent = ' ' + f.unit;
+  document.getElementById('slider2').value = f.moisture;
+  document.getElementById('feedstock-desc').textContent = f.desc;
+  updateCalc();
+}
+
+function setProjection(btn, proj) {
+  document.querySelectorAll('.proj-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  projection = proj;
+  updateCalc();
+}
+
+// ─── CALCULATOR ──────────────────────────────────────────────
+function updateCalc() {
+  const qty = parseFloat(document.getElementById('slider1').value);
+  const moisture = parseFloat(document.getElementById('slider2').value) / 100;
+  const eff = parseFloat(document.getElementById('slider3').value) / 100;
+  const f = FEEDSTOCK[currentFeedstock];
+  const mult = projMultiplier[projection];
+  const label = projLabel[projection];
+
+  document.getElementById('val1').textContent = qty;
+  document.getElementById('val2').textContent = Math.round(moisture * 100);
+  document.getElementById('val3').textContent = Math.round(eff * 100);
+
+  // Core calculation
+  const dryMatter = qty * (1 - moisture * 0.3); // partial moisture adjustment
+  const gasDaily = qty * f.gasPerKg * eff;
+  const gas = gasDaily * mult;
+  const elec = gas * ELEC_PER_M3;
+  const co2 = elec * CO2_PER_KWH;
+  const savings = elec * PRICE_PER_KWH;
+  const cookHours = gas * 2; // 1m³ ≈ 2hrs cooking
+
+  // Update outputs
+  document.getElementById('out-gas').textContent = fmt(gas);
+  document.getElementById('out-gas-sub').textContent = 'm³ per ' + label;
+
+  document.getElementById('out-elec').textContent = fmt(elec);
+  document.getElementById('out-elec-sub').textContent = 'kWh per ' + label;
+
+  document.getElementById('out-co2').textContent = fmt(co2);
+  document.getElementById('out-co2-sub').textContent = 'kg CO₂e per ' + label;
+
+  document.getElementById('out-savings').textContent = '₹' + fmt(savings);
+  document.getElementById('out-savings-sub').textContent = 'per ' + label;
+
+  // Gauge
+  const gaugeWidth = Math.min(100, (gasDaily / 20) * 100);
+  document.getElementById('gauge').style.width = gaugeWidth + '%';
+
+  // Impact sentence
+  const annualSavings = gasDaily * 365 * ELEC_PER_M3 * PRICE_PER_KWH;
+  document.getElementById('imp-qty').textContent = qty + ' kg';
+  document.getElementById('imp-gas').textContent = fmt(gas) + ' m³';
+  document.getElementById('imp-cook').textContent = fmt(cookHours) + ' hrs';
+  document.getElementById('imp-save').textContent = '₹' + fmt(savings);
+  document.getElementById('imp-annual').textContent = '₹' + fmt(annualSavings);
+
+  // Animate number change
+  document.querySelectorAll('.metric-num').forEach(el => {
+    el.style.transform = 'scale(1.05)';
+    setTimeout(() => el.style.transform = '', 250);
+  });
+}
+
+function fmt(n) {
+  if (n >= 100000) return (n/100000).toFixed(1) + 'L';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+  if (n >= 100) return Math.round(n);
+  return parseFloat(n.toFixed(1));
+}
+
+// ─── MAP ─────────────────────────────────────────────────────
+const PLANTS = [
+  { lat: 18.5204, lng: 73.8567, name: 'Pune Municipal Biogas', type: 'Municipal', cap: '500 TPD' },
+  { lat: 28.6328, lng: 77.1197, name: 'IARI Biogas Plant', type: 'Agricultural', cap: '50 TPD' },
+  { lat: 11.2189, lng: 78.1674, name: 'Namakkal Cattle Biogas', type: 'Cattle Dung', cap: '200 TPD' },
+  { lat: 29.6857, lng: 76.9905, name: 'Karnal Gobar Gas Plant', type: 'Rural', cap: '80 TPD' },
+  { lat: 20.0059, lng: 73.7898, name: 'Nashik Agri Biogas', type: 'Crop Residue', cap: '150 TPD' },
+  { lat: 12.9716, lng: 77.5946, name: 'Bengaluru City Biogas', type: 'Municipal', cap: '600 TPD' },
+  { lat: 22.5726, lng: 88.3639, name: 'Kolkata MSW Biogas', type: 'Municipal', cap: '800 TPD' },
+  { lat: 17.3850, lng: 78.4867, name: 'Hyderabad Biogas Hub', type: 'Mixed', cap: '350 TPD' },
+  { lat: 23.0225, lng: 72.5714, name: 'Ahmedabad Biogas Plant', type: 'Municipal', cap: '420 TPD' },
+  { lat: 26.9124, lng: 75.7873, name: 'Jaipur Green Energy', type: 'Agricultural', cap: '120 TPD' },
+];
+
+let map;
+function initMap() {
+  map = L.map('map', { zoomControl: true }).setView([20.5937, 78.9629], 5);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB',
+    maxZoom: 19
+  }).addTo(map);
+
+  const greenIcon = L.divIcon({
+    html: '<div style="width:14px;height:14px;background:#4ade80;border-radius:50%;border:2px solid #000;box-shadow:0 0 8px rgba(74,222,128,0.6)"></div>',
+    className: '', iconAnchor: [7, 7]
+  });
+
+  PLANTS.forEach(p => {
+    const marker = L.marker([p.lat, p.lng], { icon: greenIcon }).addTo(map);
+    marker.bindPopup(`<div style="color:#e8f5e8;background:#161e16;padding:8px 12px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid #1f2e1f;min-width:160px"><strong style="color:#4ade80;font-size:13px">${p.name}</strong><br><span style="color:#6b8c6b">${p.type} • ${p.cap}</span></div>`, { className:'', maxWidth:220 });
+  });
+}
+
+function locateUser() {
+  if (!navigator.geolocation) return alert('Geolocation not supported in this browser.');
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude: lat, longitude: lng } = pos.coords;
+    map.setView([lat, lng], 10);
+    const userIcon = L.divIcon({
+      html: '<div style="width:16px;height:16px;background:#fbbf24;border-radius:50%;border:3px solid #000;box-shadow:0 0 10px rgba(251,191,36,0.7)"></div>',
+      className: '', iconAnchor: [8, 8]
+    });
+    L.marker([lat, lng], { icon: userIcon }).addTo(map)
+      .bindPopup('<div style="color:#e8f5e8;background:#161e16;padding:8px 12px;border-radius:8px;font-family:DM Sans,sans-serif;font-size:12px">📍 <strong style="color:#fbbf24">Your Location</strong></div>').openPopup();
+  }, () => alert('Could not get your location. Please allow location access.'));
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── INIT ────────────────────────────────────────────────────
+window.addEventListener('load', () => { initMap(); updateCalc(); });
+</script>
+</body>
+</html>
